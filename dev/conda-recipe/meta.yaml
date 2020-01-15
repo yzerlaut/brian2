@@ -34,7 +34,7 @@ requirements:
 test:
   commands:
     # Run a simple test that uses some of the main simulation elements
-    - '{{ PYTHON }} -c "import brian2; print(brian2.__file__)"'
+    - 'python -c "import brian2; print(brian2.__file__)"'
 
 
 about:
