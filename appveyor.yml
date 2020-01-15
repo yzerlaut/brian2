@@ -33,7 +33,7 @@ install:
   # Create the test environment
   - 'appveyor-retry conda install --quiet --yes python=%PYTHON_VERSION% %PYTHON_PACKAGES%'
   # For faster tests, only build conda packages for the master branch or pull requests
-  - 'if "%APPVEYOR_PULL_REQUEST_NUMBER%" == "" if not "%APPVEYOR_REPO_BRANCH%" == "master" set DO_CONDA_BUILD=FALSE'
+#  - 'if "%APPVEYOR_PULL_REQUEST_NUMBER%" == "" if not "%APPVEYOR_REPO_BRANCH%" == "master" set DO_CONDA_BUILD=FALSE'
 
 build: false  # Not a C# project, build stuff at the test step instead.
 
