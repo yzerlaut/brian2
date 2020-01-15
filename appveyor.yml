@@ -8,19 +8,6 @@ environment:
     CMD_IN_ENV: "cmd /E:ON /V:ON /C .\\dev\\continuous-integration\\appveyor\\run_with_env.cmd"
 
   matrix:
-    - PYTHON: "C:\\Miniconda37-x64"
-      PYTHON_VERSION: "3.7"
-      PYTHON_ARCH: "64"
-      platform: x64
-      STANDALONE: "TRUE"
-      FLOAT_DTYPE_32: "TRUE"
-
-    - PYTHON: "C:\\Miniconda37"
-      PYTHON_VERSION: "3.7"
-      PYTHON_ARCH: "32"
-      platform: x86
-      STANDALONE: "TRUE"
-
     - PYTHON: "C:\\Miniconda37"
       PYTHON_VERSION: "3.7"
       PYTHON_ARCH: "32"
@@ -30,55 +17,6 @@ environment:
       DO_CONDA_BUILD: "TRUE"
       SPLIT_RUN: "1"
 
-    - PYTHON: "C:\\Miniconda37"
-      PYTHON_VERSION: "3.7"
-      PYTHON_ARCH: "32"
-      platform: x86
-      STANDALONE: "FALSE"
-      DO_CONDA_BUILD: "FALSE"
-      SPLIT_RUN: "2"
-
-    - PYTHON: "C:\\Miniconda37-x64"
-      PYTHON_VERSION: "3.7"
-      PYTHON_ARCH: "64"
-      platform: x64
-      STANDALONE: "FALSE"
-      CONDA_PY: "37"
-      DO_CONDA_BUILD: "TRUE"
-      SPLIT_RUN: "1"
-
-    - PYTHON: "C:\\Miniconda37-x64"
-      PYTHON_VERSION: "3.7"
-      PYTHON_ARCH: "64"
-      platform: x64
-      STANDALONE: "FALSE"
-      DO_CONDA_BUILD: "FALSE"
-      SPLIT_RUN: "2"
-
-    - PYTHON: "C:\\Miniconda37-x64"
-      PYTHON_VERSION: "3.7"
-      PYTHON_ARCH: "64"
-      platform: x64
-      STANDALONE: "FALSE"
-      CONDA_PY: "37"
-      DO_CONDA_BUILD: "FALSE"
-      FLOAT_DTYPE_32: "TRUE"
-      SPLIT_RUN: "1"
-
-    - PYTHON: "C:\\Miniconda37-x64"
-      PYTHON_VERSION: "3.7"
-      PYTHON_ARCH: "64"
-      platform: x64
-      STANDALONE: "FALSE"
-      DO_CONDA_BUILD: "FALSE"
-      FLOAT_DTYPE_32: "TRUE"
-      SPLIT_RUN: "2"
-
-    - PYTHON: "C:\\Miniconda37-x64"
-      PYTHON_VERSION: "3.7"
-      PYTHON_ARCH: "64"
-      platform: x64
-      STANDALONE: "TRUE"
 
 install:
   # Add the paths
@@ -98,16 +36,6 @@ install:
   - 'if "%APPVEYOR_PULL_REQUEST_NUMBER%" == "" if not "%APPVEYOR_REPO_BRANCH%" == "master" set DO_CONDA_BUILD=FALSE'
 
 build: false  # Not a C# project, build stuff at the test step instead.
-
-test_script:
-  # Run the test suite
-  - '%CMD_IN_ENV% python -c "import sys; print(sys.executable)"'
-  - '%CMD_IN_ENV% python setup.py install --single-version-externally-managed --record=record.txt'
-  - 'set SRC_DIR=%CD%'
-  - 'cd \'
-  # Since "CMD_IN_ENV" assumes we are in the source directory we cannot use it
-  # here. We therefore copy its content and use the correct path
-  - 'cmd /E:ON /V:ON /C %SRC_DIR%\dev\continuous-integration\appveyor\run_with_env.cmd python %SRC_DIR%\dev\continuous-integration\run_test_suite.py'
 
 after_test:
   - 'IF "%DO_CONDA_BUILD%" == "TRUE" (
