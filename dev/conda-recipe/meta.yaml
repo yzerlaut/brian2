@@ -31,7 +31,7 @@ requirements:
     - setuptools >=24
     - py-cpuinfo  # [win]
 
-
+test:
   commands:
     # Run a simple test that uses some of the main simulation elements
     - 'python -c "import brian2; print(brian2.__file__)"'
